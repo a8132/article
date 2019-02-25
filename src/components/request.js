@@ -16,11 +16,6 @@ export const quotaApi = axios.create({
 
 // request interceptor
 api.interceptors.request.use(config => {
-  let token = actions.getToken()
-  if (token) {
-    // 服务端准备好 就可以上token了
-    config.headers['token'] = token
-  }
   return config
 }, error => {
   // Do something with request error
