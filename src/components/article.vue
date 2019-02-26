@@ -9,6 +9,9 @@
 		<div class="cen">
 			{{data.content}}
 		</div>
+		<div class="">
+      <router-link :to="data.next_article_url" class="nextlink">载入下一篇</router-link>
+    </div>
 		<div class="zwd"></div>
 	</div>
 </template>
@@ -22,21 +25,24 @@
     data() {
       return {
         data: {
+          artid : '',
 					title : '',
           time : '',
           content : '',
+          next_article_url : '',
 				}
       }
     },
     methods: {
       fetch() {
-        let params = {
-					
+        params : {
+					this.$routes.query.id 
 				}
-        api.get('http://api.bogerizhi.com/ix/index?op=getArticleInfo', {
-					title : data.title,
-          time : data.pubtime,
-          content : data.content,
+        api.post('http://api.bogerizhi.com/ix/index?op=getArticleInfo', {
+          title : this.title,
+          time : this.pubtime,
+          content : this.content,
+          article : this.next_article_url,
         }).then(resp => {
           this.data = resp.data
         })
