@@ -6,7 +6,7 @@ let _env_ = qs.parse(location.search.replace('?', ''))._env_
 const api = axios.create({
   baseURL: _env_ || process.env.BASE_API, // api的base_url
   timeout: 30000, // request timeout
-  withCredentials: true
+  withCredentials: false
 })
 export const quotaApi = axios.create({
   baseURL: _env_ || process.env.BASE_API, // api的base_url
