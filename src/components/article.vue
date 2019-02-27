@@ -1,16 +1,16 @@
 <template>
 	<div class="c-box">
 		<div class="art-title">
-			{{data.title}}
+			{{data.article_info.title}}
 		</div>
     <div class="art-time">
-      {{data.time}}
+      {{data.article_info.pubtime}}
     </div>
     <div class="cen">
-      {{data.content}}
+      {{data.article_info.content}}
     </div>
     <div class="">
-      <router-link :to="data.next_article_url" class="nextlink">载入下一篇</router-link>
+      <router-link :to="'/article' + '?id=' + data.next_article_artid" class="nextlink" @click.native="refresh">载入下一篇</router-link>
     </div>
     <div class="zwd"></div>
 	</div>
@@ -27,9 +27,9 @@ export default {
       data: {
         artid: this.$route.query.id,
         title: '',
-        time: '',
+        pubtime: '',
         content: '',
-        next_article_url: ''
+        next_article_artid: ''
       }
     }
   },
@@ -37,9 +37,12 @@ export default {
     fetch () {
       let params = {}
       api.get('http://api.bogerizhi.com/ix/articleforh5' + '?artid=' + this.$route.query.id, params).then(resp => {
-        this.data = resp.article_info
-        console.log(resp)
+        this.data = resp
+        console.log(resp.next_article_artid)
       })
+    },
+    refresh:function(){
+      this.$router.go(0);  
     }
   },
   created () {
